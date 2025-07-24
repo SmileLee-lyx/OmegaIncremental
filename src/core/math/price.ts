@@ -63,8 +63,8 @@ export class Exp2Scaling implements Scaling {
         }
         return this.thresholdCount.add(
             currency.div(this.start2).logBase(this.raise2).mul(2).add(this.raise.logBase(this.raise2).pow(2))
-                .sqrt().sub(this.raise.logBase(this.raise2))
-        )
+                .sqrt().sub(this.raise.logBase(this.raise2)),
+        );
     }
 }
 

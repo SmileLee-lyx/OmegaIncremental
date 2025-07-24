@@ -117,7 +117,7 @@ const upgradeSpecs: AUpgradeSpec[] = [
             if (!player.game.shownAlerts.includes('mouse-trigger-hotkey')) {
                 GlobalMessages.addMessage({
                     'type': 'alert',
-                    messageText: resolveFormattedText(text('hint.mouse-trigger-hotkey'))
+                    messageText: resolveFormattedText(text('hint.mouse-trigger-hotkey')),
                 });
                 player.game.shownAlerts.push('mouse-trigger-hotkey');
             }
@@ -246,8 +246,8 @@ const A = {
         id: 'A.reset',
         description: 'hotkey.A-reset',
         action() {
-            A.reset.buy()
-        }
+            A.reset.buy();
+        },
     } satisfies HotkeyEvent,
 
     init() {
@@ -274,8 +274,8 @@ const A = {
                 GlobalMessages.addMessage({
                     type: 'alert',
                     messageText: resolveFormattedText(
-                        text('hint.reset-A-twice')
-                    )
+                        text('hint.reset-A-twice'),
+                    ),
                 });
                 player.game.shownAlerts.push('reset-A-twice');
             }

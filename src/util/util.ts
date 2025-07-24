@@ -1,5 +1,3 @@
-import OmegaNum from "omega_num.js";
-
 export type BooleanSource = boolean | null | undefined | (() => BooleanSource);
 
 export function toBoolean(value: BooleanSource, defaultValue: boolean = true): boolean {

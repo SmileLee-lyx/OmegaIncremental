@@ -5,7 +5,6 @@ import ResetButton from "@/components/game-objects/ResetButton.vue";
 import UpgradeButton from "@/components/game-objects/UpgradeButton.vue";
 import TextFormatter from "@/components/util-objects/TextFormatter.vue";
 import A from "@/core/game-items/A.js";
-import Point from "@/core/game-items/point.js";
 import { player } from "@/core/global-objects.js";
 import { text } from "@/text/text.js";
 </script>

@@ -5,7 +5,6 @@ import { text } from "@/text/text.js";
 import { type SideBarConfig } from "@/util/side-bar-config.js";
 import { toBoolean } from "@/util/util.js";
 import { computed, type ComputedRef, ref, type Ref } from "vue";
-import prod = Effects.prod;
 
 const props = defineProps<{
     config: SideBarConfig;
@@ -182,20 +181,20 @@ function mouseLeaveItem(itemId: string) {
                         class="sidebar-sub-menu"
                     >
                         <template v-for="item of group.items">
-                        <div v-if="toBoolean(item.shown, true)" class="sidebar-sub-menu-element">
-                            <button
-                                class="sidebar-sub-menu-button"
-                                @click="switchItem(item.id)"
-                                @mouseenter="mouseEnterItem(item.id)"
-                                @mouseleave="mouseLeaveItem(item.id)"
-                            >
+                            <div v-if="toBoolean(item.shown, true)" class="sidebar-sub-menu-element">
+                                <button
+                                    class="sidebar-sub-menu-button"
+                                    @click="switchItem(item.id)"
+                                    @mouseenter="mouseEnterItem(item.id)"
+                                    @mouseleave="mouseLeaveItem(item.id)"
+                                >
                             <span class="sidebar-sub-menu-button-text">
                                 <TextFormatter :text="text(item.description)"/>
                             </span>
-                                <span v-if="modelValue === item.id" class="chosen-button-top"></span>
-                            </button>
-                            <!--                        <div v-if="game.alert_tabs.has(tab.tabId)" class="sidebar-alert"/>-->
-                        </div>
+                                    <span v-if="modelValue === item.id" class="chosen-button-top"></span>
+                                </button>
+                                <!--                        <div v-if="game.alert_tabs.has(tab.tabId)" class="sidebar-alert"/>-->
+                            </div>
                         </template>
                     </div>
                 </transition>

@@ -42,6 +42,7 @@
 .message-header-slide-enter-from {
   transform: translate(-50%, -100%);
 }
+
 //.message-header-slide-enter-to {
 //  transform: translateX(-50%);
 //}
@@ -51,6 +52,7 @@
 .message-header-slide-leave-to {
   transform: translate(-50%, -100%);
 }
+
 .message-header-slide-enter-active, .message-header-slide-leave-active {
   transition: all 0.5s ease;
 }

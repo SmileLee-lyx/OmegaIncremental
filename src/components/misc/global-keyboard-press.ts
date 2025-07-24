@@ -1,6 +1,5 @@
 import { runOnFrame } from "@/components/misc/run-on-frame.js";
 import type { HotkeyEvent } from "@/core/Types.js";
-import type { TextId } from "@/text/text.js";
 import { onMounted, onUnmounted, reactive, ref } from "vue";
 
 export let isShiftPressed = ref(false);

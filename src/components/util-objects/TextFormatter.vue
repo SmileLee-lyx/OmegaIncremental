@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import a from "@/core/game-items/A.js";
 import {
     format,
     type FormattedText,

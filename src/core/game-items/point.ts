@@ -153,11 +153,11 @@ const pointUpgradeSpecs: PointUpgradeSpec[] = [
             if (!player.game.shownAlerts.includes('hold-shift')) {
                 GlobalMessages.addMessage({
                     'type': 'alert',
-                    messageText: resolveFormattedText(text('hint.hold-shift'))
+                    messageText: resolveFormattedText(text('hint.hold-shift')),
                 });
                 player.game.shownAlerts.push('hold-shift');
             }
-        }
+        },
     },
     {
         id: 14,

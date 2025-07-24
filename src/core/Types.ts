@@ -207,7 +207,7 @@ export abstract class AbstractBuyable implements Buyable {
             effect: () => this.effect!!(),
             count: () => this.boughtCount,
             price: () => this.price(),
-        }
+        };
     }
 
     price(): OmegaNum {
@@ -226,6 +226,7 @@ export interface Reset extends NamedItem {
     owner: string;
 
     buyable(): boolean;
+
     buy(): void;
 }
 

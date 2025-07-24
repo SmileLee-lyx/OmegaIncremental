@@ -93,8 +93,8 @@ export const playerInitial: Player = {
         A: {
             hotkeyReset: {
                 unlocked: true,
-            }
-        }
+            },
+        },
     },
 
     point: {
