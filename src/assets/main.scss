@@ -1,0 +1,26 @@
+@use "transition.scss";
+@use "text.scss";
+@use "sidebar.scss";
+@use "tab.scss";
+@use "tooltip.scss";
+@use "game-objects.scss";
+@use "message.scss";
+
+body {
+  margin: 0;
+}
+
+.horizontal-flex-panel {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.flex-element {
+  flex-grow: 1;
+}
+
+.content-center {
+  display: grid;
+  place-items: center;
+}

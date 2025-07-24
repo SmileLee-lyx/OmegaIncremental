@@ -1,0 +1,61 @@
+sub {
+  vertical-align: baseline;
+  transform: translateY(0.3em) scale(0.8);
+  display: inline-block;
+}
+
+.main-text, .text-box {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.text-row {
+  display: inline-block;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.large {
+  font-size: 1.25em;
+}
+
+.large2 {
+  font-size: 1.5625em;
+}
+
+.small {
+  font-size: 0.8em;
+}
+
+.small2 {
+  font-size: 0.64em;
+}
+
+.point-text {
+  animation: smoothBlink 2s infinite ease-in-out;
+}
+
+@keyframes smoothBlink {
+  0%, 100% {
+    color: #444;
+  }
+  50% {
+    color: #888;
+  }
+}
+
+.A-text {
+  color: #f00
+}
+
+.fixed-width-number {
+  position: relative;
+  display: inline-block;
+  text-align: right;
+}
+
+.width-30 {
+  width: 30px;
+}

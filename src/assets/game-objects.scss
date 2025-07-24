@@ -1,0 +1,281 @@
+.general-button {
+  position: relative;
+  border-width: 3px;
+  border-style: solid;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  text-align: center;
+  line-height: 16px;
+  white-space: normal;
+  vertical-align: middle;
+
+  border-color: #000;
+  background-color: #fff;
+  color: #000;
+
+  &.disabled {
+    cursor: not-allowed;
+  }
+}
+
+// exactly one class among the following:
+// not-unlocked, not-buyable, buyable, fully-bought
+
+.upgrade-button {
+  @extend .general-button;
+
+  width: 150px;
+  height: 150px;
+
+  &.not-unlocked {
+    border-color: #666;
+    background-color: #666;
+  }
+
+  &.not-buyable {
+    border-color: #000;
+    background-color: #666;
+  }
+
+  &.buyable {
+    border-color: #000;
+    background-color: #aaa;
+  }
+
+  &.fully-bought {
+    border-color: #000;
+    background-color: #fff;
+  }
+}
+
+.upgrade-button.buyable::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: opacity 0.3s ease;
+}
+
+.upgrade-button.buyable:hover::before {
+  opacity: 1;
+}
+
+.upgrade-button.A-button {
+  &.not-unlocked {
+    border-color: #600;
+    background-color: #666;
+  }
+
+  &.not-buyable {
+    border-color: #f00;
+    background-color: #666;
+  }
+
+  &.buyable {
+    border-color: #f00;
+    background-color: #faa;
+  }
+
+  &.fully-bought {
+    border-color: #f00;
+    background-color: #fff;
+  }
+}
+
+.fixed-text {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  text-align: center;
+}
+
+.upgrade-button-title {
+  @extend .fixed-text;
+  top: 10px;
+}
+
+.upgrade-button-description {
+  @extend .fixed-text;
+  top: 70px;
+  transform: translateY(-50%);
+}
+
+.upgrade-button-effect {
+  @extend .fixed-text;
+  bottom: 30px;
+}
+
+.upgrade-button-price {
+  @extend .fixed-text;
+  bottom: 10px;
+}
+
+.fixed-width-panel {
+  position: relative;
+  display: inline-block;
+  text-align: center;
+}
+
+.buyable-panel {
+  position: relative;
+  display: inline-block;
+  width: 250px;
+  height: 200px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #000;
+}
+
+.buyable-panel-button {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 20px;
+  width: 180px;
+  height: 30px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #000;
+  border-radius: 8px;
+  background-color: #fff;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+
+  &.not-buyable {
+    background-color: #888;
+  }
+}
+
+.buyable-panel-button.buyable::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.buyable-panel-button.buyable:hover::before {
+  opacity: 1;
+}
+
+.buyable-panel-title {
+  @extend .fixed-text;
+  top: 10px;
+}
+
+.buyable-panel-description {
+  @extend .fixed-text;
+  top: 80px;
+  transform: translateY(-50%);
+}
+
+.buyable-panel-effect {
+  @extend .fixed-text;
+  bottom: 50px;
+}
+
+.upgrade-button.settings {
+  height: 80px;
+
+  &.not-unlocked {
+    border-color: #aaa;
+    background-color: #aaa;
+  }
+
+  &.not-buyable {
+    border-color: #aaa;
+    background-color: #aaa;
+  }
+
+  &.buyable {
+    border-color: #000;
+    background-color: #fff;
+  }
+
+  &.fully-bought {
+    border-color: #fff;
+    background-color: #fff;
+  }
+}
+
+.upgrade-button.settings::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.upgrade-button.settings:hover::before {
+  opacity: 1;
+}
+
+.select-button {
+  @extend .general-button;
+
+  position: relative;
+  width: 150px;
+  height: 100px;
+  border: 3px solid black;
+  background-color: white;
+}
+
+.custom-select {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  z-index: 1000;
+}
+
+.dropdown-item {
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background-color: #f0f0f0;
+}
+
+.hotkey-button {
+  @extend .general-button;
+
+  width: 30px;
+  height: 30px;
+}
+
+.hotkey-button::before {
+   content: '';
+   position: absolute;
+   top: 0;
+   left: 0;
+   height: 100%;
+   width: 100%;
+   background-color: rgba(0, 0, 0, 0.1);
+   opacity: 0;
+   transition: opacity 0.3s ease;
+ }
+
+.hotkey-button:hover::before {
+  opacity: 1;
+}

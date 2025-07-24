@@ -1,0 +1,29 @@
+{
+  "name": "omegaincremental",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "lz-string": "^1.5.0",
+    "omega_num.js": "^0.7.0",
+    "sass-embedded": "^1.89.2",
+    "vue": "^3.5.17"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.17.16",
+    "@types/node": "^22.13.5",
+    "@types/web": "^0.0.214",
+    "@vitejs/plugin-vue": "^6.0.0",
+    "@vue/tsconfig": "^0.7.0",
+    "typescript": "~5.8.3",
+    "vite": "^7.0.4",
+    "vite-plugin-node-polyfills": "^0.24.0",
+    "vue-tsc": "^2.2.12"
+  }
+}
