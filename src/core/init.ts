@@ -20,6 +20,37 @@ class OmegaNumHandler {
     }
 }
 
+class InfinityNumHandler {
+    static replacer(data: any): any {
+        if (typeof data === "number") {
+            if (data === Infinity) {
+                return {
+                    __type: 'number',
+                    value: 'Infinity',
+                };
+            } else if (data === -Infinity) {
+                return {
+                    __type: 'number',
+                    value: '-Infinity',
+                };
+            } else if (Number.isNaN(data)) {
+                return {
+                    __type: 'number',
+                    value: 'NaN',
+                };
+            }
+        }
+        return data;
+    }
+
+    static reviver(data: any): any {
+        if (typeof data === "object" && data !== null && data.__type === 'number') {
+            return Number(data.value);
+        }
+        return data;
+    }
+}
+
 export function initGlobal() {
     delete (OmegaNum.prototype as any).toJSON;
 
@@ -28,4 +59,5 @@ export function initGlobal() {
     (window as any).player = player;
 
     registerSerializationHandler(OmegaNumHandler);
+    registerSerializationHandler(InfinityNumHandler);
 }

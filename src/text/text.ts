@@ -12,7 +12,7 @@ export let DEFAULT_KEY: TextId | null = 'default';
 
 /**
  * 返回 key 对应的文本.
- * 当 key 不存在时, 根据
+ * 当 key 不存在时, 根据 defaultKey 执行默认行为.
  *
  * @param key
  * @param defaultKey

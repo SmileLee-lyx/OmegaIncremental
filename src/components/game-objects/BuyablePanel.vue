@@ -4,28 +4,15 @@ import TextFormatter from "@/components/util-objects/TextFormatter.vue";
 import type { Buyable } from "@/core/Types.js";
 import { text } from "@/text/text.js";
 import { toBoolean } from "@/util/util.js";
-import { ref, type Ref } from "vue";
 
 const props = defineProps<{
     buyable: Buyable;
-    extra_classes?: string | string[];
-    width?: string | number;
-    height?: string | number;
 }>();
-
-let mouseHover: Ref<boolean> = ref(false);
 
 function state(): string {
     if (!toBoolean(props.buyable.unlocked, true)) return 'not-unlocked';
     if (props.buyable.buyable()) return 'buyable';
     return 'not-buyable';
-}
-
-function style(): any {
-    return {
-        width: props.width,
-        height: props.height,
-    };
 }
 </script>
 
@@ -33,8 +20,7 @@ function style(): any {
     <span class="tooltip-container">
         <span
             v-show="toBoolean(buyable.visible, true)"
-            :class="extra_classes"
-            :style="style()"
+            :class="buyable.extraClasses"
             class="buyable-panel"
             v-bind="$attrs"
         >
@@ -48,7 +34,7 @@ function style(): any {
                            :args="buyable.args"
                            :text="text(buyable.effectDescriptionId)"
                            class="buyable-panel-effect"/>
-            <button :class="[state(), extra_classes]"
+            <button :class="[state(), buyable.extraClasses]"
                     class="buyable-panel-button"
                     @click="() => buyable.buy()"
             >

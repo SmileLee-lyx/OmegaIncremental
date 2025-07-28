@@ -3,7 +3,7 @@ import { ComposedHandler, type SerializationHandler, Serializer, TrivialHandler 
 let globalHandler: SerializationHandler = TrivialHandler.INSTANCE;
 
 export function registerSerializationHandler(handler: SerializationHandler) {
-    globalHandler = new ComposedHandler(handler);
+    globalHandler = new ComposedHandler(globalHandler, handler);
 }
 
 export function serialize(data: any): string {

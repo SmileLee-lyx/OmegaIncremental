@@ -11,6 +11,9 @@ export type RecordsData = {
     A: {
         points: OmegaNum;
         resetTimes: OmegaNum;
+        resetDuration: OmegaNum;
+        pointsOnReset: OmegaNum;
+        challengeDuration: OmegaNum[];
     };
 }
 
@@ -45,6 +48,8 @@ export interface Player {
         }
     };
 
+    achievements: number[];
+
     point: {
         points: OmegaNum;
         boosters: OmegaNum[];
@@ -58,6 +63,9 @@ export interface Player {
         resetTimes: OmegaNum;
         upgrades: number[];
         buyables: OmegaNum[];
+        challengeCompletions: number[];
+
+        runningChallenge?: number;
     };
 
     records: {
@@ -75,6 +83,7 @@ export interface Player {
     game: {
         activeTab: string | null;
         shownAlerts: string[];
+        collapsedPanels: Record<string, boolean>;
     };
 }
 
@@ -97,6 +106,8 @@ export const playerInitial: Player = {
         },
     },
 
+    achievements: [],
+
     point: {
         points: new OmegaNum(1),
         boosters: [],
@@ -110,6 +121,7 @@ export const playerInitial: Player = {
         resetTimes: new OmegaNum(0),
         upgrades: [],
         buyables: [],
+        challengeCompletions: [],
     },
 
     records: {
@@ -122,6 +134,9 @@ export const playerInitial: Player = {
             A: {
                 points: new OmegaNum(0),
                 resetTimes: new OmegaNum(0),
+                resetDuration: new OmegaNum(Infinity),
+                pointsOnReset: new OmegaNum(0),
+                challengeDuration: [],
             },
         },
         current: {
@@ -133,8 +148,8 @@ export const playerInitial: Player = {
     settings: {},
     game: {
         activeTab: 'Point',
-
         shownAlerts: [],
+        collapsedPanels: {},
     },
 };
 

@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import TextFormatter from "@/components/util-objects/TextFormatter.vue";
-import { Effects } from "@/core/Effects.js";
 import { text } from "@/text/text.js";
 import { type SideBarConfig } from "@/util/side-bar-config.js";
 import { toBoolean } from "@/util/util.js";
@@ -91,12 +90,7 @@ function switchGroup(groupId: string) {
             switchItem(findNextActive(null, groupId));
         }
     } else {
-        let targetItemId = groupActiveItems[groupId];
-        if (targetItemId !== undefined) {
-            switchItem(findNextActive(targetItemId, groupId, false));
-        } else {
-            switchItem(findNextActive(null, groupId));
-        }
+        switchItem(findNextActive(currentItemId, groupId, false));
     }
 }
 

@@ -1,6 +1,7 @@
 import { globalNow } from "@/components/misc/component-timer.js";
 import { clearHotkeys } from "@/components/misc/global-keyboard-press.js";
 import A from "@/core/game-items/A.js";
+import Ach from "@/core/game-items/achievement.js";
 import Point from "@/core/game-items/point.js";
 import { lastAutoSave, type PartialRecordsData, player, type RecordsData } from "@/core/global-objects.js";
 import { autoSave } from "@/core/save-load/save-load.js";
@@ -50,9 +51,11 @@ export function initGame() {
 
 export function gameLoop(duration: number) {
     player.META.timeStamp = Date.now();
+
     updateGameTime(duration);
     Point.gameLoop(duration);
     A.gameLoop(duration);
+    Ach.gameLoop();
 
     checkAutoSave();
 }

@@ -130,6 +130,7 @@
   border-width: 2px;
   border-style: solid;
   border-color: #000;
+  background-color: #fff;
 }
 
 .buyable-panel-button {
@@ -151,7 +152,7 @@
   }
 }
 
-.buyable-panel-button.buyable::before {
+.buyable-panel-button::before {
   content: '';
   position: absolute;
   top: 0;
@@ -181,6 +182,97 @@
 .buyable-panel-effect {
   @extend .fixed-text;
   bottom: 50px;
+}
+
+.buyable-panel.A-button {
+  border-color: #f00;
+}
+
+.buyable-panel-button.A-button {
+  border-color: #f00;
+}
+
+.buyable-panel-button.A-button:hover::before {
+  background-color: rgba(255, 0, 0, 0.1);
+}
+
+.challenge-panel {
+  position: relative;
+  display: inline-block;
+  width: 250px;
+  height: 200px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #000;
+  background-color: #fff;
+}
+
+.challenge-panel-button {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 20px;
+  width: 180px;
+  height: 30px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #000;
+  border-radius: 8px;
+  background-color: #fff;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+
+  &.not-buyable {
+    background-color: #888;
+  }
+}
+
+.challenge-panel-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.challenge-panel-button.buyable:hover::before {
+  opacity: 1;
+}
+
+.challenge-panel-title {
+  @extend .fixed-text;
+  top: 10px;
+}
+
+.challenge-panel-description {
+  @extend .fixed-text;
+  top: 70px;
+  transform: translateY(-50%);
+}
+
+.challenge-panel-effect {
+  @extend .fixed-text;
+  bottom: 50px;
+}
+
+.challenge-panel-target {
+  @extend .fixed-text;
+  bottom: 65px;
+}
+
+.challenge-panel.A-button {
+  border-color: #f00;
+}
+
+.challenge-panel-button.A-button {
+  border-color: #f00;
+}
+
+.challenge-panel-button.A-button:hover::before {
+  background-color: rgba(255, 0, 0, 0.1);
 }
 
 .upgrade-button.settings {
@@ -278,4 +370,113 @@
 
 .hotkey-button:hover::before {
   opacity: 1;
+}
+
+.achievement {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1px;
+  width: 80px;
+  height: 80px;
+  position: relative;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #000;
+  background-color: #fff;
+  border-radius: 4px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.achievement.A-button {
+  border-color: #f00;
+}
+
+.achievement.not-unlocked::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  transition: opacity 0.3s ease;
+}
+
+.achievement-status-span {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 10px;
+  height: 10px;
+  border: #000 1px solid;
+  overflow: hidden;
+  transform: translate(1px, 1px);
+}
+
+.achievement-status-icon {
+  clip-path: inset(25% 25% 25% 25%);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  transform: scale(2);
+}
+
+.outer-collapsable-container {
+  position: relative;
+  display: inline-block;
+  line-height: 0;
+}
+
+.collapsable-container {
+  line-height: normal;
+  position: relative;
+  width: 100%;
+  border-radius: 10px;
+  border-width: 10px 0 10px 0;
+  border-style: solid;
+  border-color: #ccc;
+  transition: height 0.5s ease;
+  background-color: #ccc;
+  margin: 0;
+}
+
+.collapsable-container.collapsed {
+  overflow: hidden;
+}
+
+.collapsable-trigger-button {
+  width: 200px;
+  height: 20px;
+  margin: 0 auto;
+  border: none;
+  background-color: #ccc;
+  color: #000;
+  cursor: pointer;
+  clip-path: polygon(
+                  0% 0%, 100% 0%, 70% 100%, 30% 100%
+  );
+  position: relative;
+}
+
+.collapsable-trigger-button::after {
+  display: inline-block;
+  content: '▼';
+  transform: rotate(180deg);
+}
+
+.collapsable-trigger-button.collapsed::after {
+  transform: rotate(0deg);
+}
+
+.collapsable-container.A-button {
+  background-color: #fcc;
+  border-color: #fcc;
+}
+
+.collapsable-trigger-button.A-button {
+  background-color: #fcc;
 }

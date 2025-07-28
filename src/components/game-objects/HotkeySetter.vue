@@ -83,9 +83,11 @@ let content = computed((): PFormattedText => {
 
 <template>
     <div v-show="data?.unlocked ?? true" class="text-row">
-        快捷键 (
-        <TextFormatter :text="text(config.description)"/>
-        ):
+        <TextFormatter v-if="!waiting"
+                       :args="{description: text(config.description)}"
+                       :text="text('hotkey.normal')"/>
+        <TextFormatter v-else
+                       :text="text('hotkey.wait')"/>
         <button ref="button"
                 class="hotkey-button"
                 @blur="onBlur"

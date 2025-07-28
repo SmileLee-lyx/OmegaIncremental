@@ -1,14 +1,14 @@
 import { registerHotkey } from "@/components/misc/global-keyboard-press.js";
 import { Effects, TrivialEffect } from "@/core/Effects.js";
 import A from "@/core/game-items/A.js";
-import { GlobalMessages } from "@/core/global-messages.js";
+import { alertOnce } from "@/core/global-messages.js";
 import { type PartialRecordsData, player, type RecordsData } from "@/core/global-objects.js";
 import { Exp2Scaling, type Scaling } from "@/core/math/price.js";
 import { AbstractBuyable, AbstractUpgrade, type HotkeyEvent } from "@/core/Types.js";
 import { text, type TextId } from "@/text/text.js";
 import { getBit, setBit } from "@/util/bit-array.js";
-import { type FormattedText, resolveFormattedText } from "@/util/format.js";
-import { error, toBoolean } from "@/util/util.js";
+import { type FormattedText } from "@/util/format.js";
+import { error, idMapping, toBoolean } from "@/util/util.js";
 import OmegaNum, { type OmegaNumSource } from "omega_num.js";
 
 interface PointUpgradeSpec {
@@ -41,20 +41,20 @@ class PointUpgrade extends AbstractUpgrade {
         this.index = index;
     }
 
-    override get bought(): boolean {
+    get bought(): boolean {
         return getBit(player.point.upgrades, this.index);
     }
 
-    override set bought(value: boolean) {
+    set bought(value: boolean) {
         setBit(player.point.upgrades, this.index, value);
     }
 
-    override buyable(): boolean {
+    buyable(): boolean {
         return toBoolean(this.unlocked?.bind(this), true) &&
             Point.points.gte(this.price());
     }
 
-    override buy() {
+    buy() {
         if (this.bought) return;
         if (!this.buyable()) return;
         Point.points = Point.points.sub(this.price());
@@ -73,7 +73,7 @@ interface PointBuyableSpec {
 
     effectFromCount(count: OmegaNum): OmegaNum;
 
-    priceScaling: Scaling;
+    priceScaling: () => Scaling;
 
     visible?: () => boolean;
     unlocked?: () => boolean;
@@ -93,23 +93,34 @@ class PointBuyable extends AbstractBuyable {
         this.index = index;
     }
 
-    override get boughtCount(): OmegaNum {
+    get boughtCount(): OmegaNum {
         return player.point.buyables[this.id] ?? new OmegaNum(0);
     }
 
-    override set boughtCount(value: OmegaNum) {
+    set boughtCount(value: OmegaNum) {
         player.point.buyables[this.id] = value;
     }
 
-    override buyable(): boolean {
+    buyable(): boolean {
         return toBoolean(this.unlocked?.bind(this), true) &&
             Point.points.gte(this.price());
     }
 
-    override buy() {
+    buy() {
         if (!this.buyable()) return;
         Point.points = Point.points.sub(this.price());
         this.boughtCount = this.boughtCount.add(1);
+    }
+
+    canBuyMax(): boolean {
+        return A.C(2).fullyCompleted;
+    }
+
+    buyMax(): void {
+        if (!this.canBuyMax()) return this.buy();
+        if (!this.buyable()) return;
+        this.boughtCount = this.priceScaling().maxBuyable(Point.points).floor();
+        this.buy();
     }
 }
 
@@ -150,13 +161,11 @@ const pointUpgradeSpecs: PointUpgradeSpec[] = [
         },
 
         buyEffect() {
-            if (!player.game.shownAlerts.includes('hold-shift')) {
-                GlobalMessages.addMessage({
-                    'type': 'alert',
-                    messageText: resolveFormattedText(text('hint.hold-shift')),
-                });
-                player.game.shownAlerts.push('hold-shift');
-            }
+            alertOnce(
+                'hold-shift',
+                true,
+                text('hint.hold-shift'),
+            );
         },
     },
     {
@@ -252,6 +261,9 @@ const pointUpgradeSpecs: PointUpgradeSpec[] = [
         visible() {
             return A.U(14).bought;
         },
+        unlocked() {
+            return Point.U(31).visible!!() && !A.C(6).isRunning();
+        },
     },
     {
         id: 32,
@@ -263,6 +275,9 @@ const pointUpgradeSpecs: PointUpgradeSpec[] = [
         visible() {
             return A.U(21).bought;
         },
+        unlocked() {
+            return Point.U(32).visible!!() && !A.C(6).isRunning();
+        },
     },
 ];
 
@@ -273,11 +288,14 @@ const pointBuyableSpecs: PointBuyableSpec[] = [
         descriptionId: 'pB1.description',
         effectDescriptionId: 'effect.simple-mul',
         effectFromCount(count: OmegaNum): OmegaNum {
-            return new OmegaNum(2).pow(count);
+            return Point.bnMult().pow(count);
         },
-        priceScaling: new Exp2Scaling(1, 10, Number.MAX_VALUE, 10),
+        priceScaling: () => new Exp2Scaling(1, 10, Number.MAX_VALUE, Point.bRaise2()),
         visible() {
             return Point.U(14).bought;
+        },
+        args: {
+            mult: () => Point.bnMult(),
         },
     },
     {
@@ -286,11 +304,14 @@ const pointBuyableSpecs: PointBuyableSpec[] = [
         descriptionId: 'pB2.description',
         effectDescriptionId: 'effect.simple-mul',
         effectFromCount(count: OmegaNum): OmegaNum {
-            return new OmegaNum(2).pow(count);
+            return Point.bnMult().pow(count);
         },
-        priceScaling: new Exp2Scaling(100, 100, Number.MAX_VALUE, 10),
+        priceScaling: () => new Exp2Scaling(100, 100, Number.MAX_VALUE, Point.bRaise2()),
         visible() {
             return Point.U(15).bought;
+        },
+        args: {
+            mult: () => Point.bnMult(),
         },
     },
     {
@@ -299,11 +320,14 @@ const pointBuyableSpecs: PointBuyableSpec[] = [
         descriptionId: 'pB3.description',
         effectDescriptionId: 'effect.simple-mul',
         effectFromCount(count: OmegaNum): OmegaNum {
-            return new OmegaNum(2).pow(count);
+            return Point.bnMult().pow(count);
         },
-        priceScaling: new Exp2Scaling('1e6', 1000, Number.MAX_VALUE, 10),
+        priceScaling: () => new Exp2Scaling('1e6', 1000, Number.MAX_VALUE, Point.bRaise2()),
         visible() {
             return Point.U(22).bought;
+        },
+        args: {
+            mult: () => Point.bnMult(),
         },
     },
     {
@@ -312,11 +336,14 @@ const pointBuyableSpecs: PointBuyableSpec[] = [
         descriptionId: 'pB4.description',
         effectDescriptionId: 'effect.simple-mul',
         effectFromCount(count: OmegaNum): OmegaNum {
-            return new OmegaNum(2).pow(count);
+            return Point.bnMult().pow(count);
         },
-        priceScaling: new Exp2Scaling('1e10', '1e5', Number.MAX_VALUE, 10),
+        priceScaling: () => new Exp2Scaling('1e10', '1e5', Number.MAX_VALUE, Point.bRaise2()),
         visible() {
             return Point.U(23).bought;
+        },
+        args: {
+            mult: () => Point.bnMult(),
         },
     },
     {
@@ -325,11 +352,14 @@ const pointBuyableSpecs: PointBuyableSpec[] = [
         descriptionId: 'pB0.description',
         effectDescriptionId: 'effect.simple-mul',
         effectFromCount(count: OmegaNum): OmegaNum {
-            return new OmegaNum(1.1).pow(count);
+            return Point.b0Mult().pow(count);
         },
-        priceScaling: new Exp2Scaling(10, 10, Number.MAX_VALUE, 10),
+        priceScaling: () => new Exp2Scaling(10, 10, Number.MAX_VALUE, Point.bRaise2()),
         visible() {
             return Point.U(21).bought;
+        },
+        args: {
+            mult: () => Point.b0Mult(),
         },
     },
     {
@@ -338,11 +368,14 @@ const pointBuyableSpecs: PointBuyableSpec[] = [
         descriptionId: 'pB5.description',
         effectDescriptionId: 'effect.simple-mul',
         effectFromCount(count: OmegaNum): OmegaNum {
-            return new OmegaNum(2).pow(count);
+            return Point.bnMult().pow(count);
         },
-        priceScaling: new Exp2Scaling('1e40', '1e8', Number.MAX_VALUE, 10),
+        priceScaling: () => new Exp2Scaling('1e40', '1e8', Number.MAX_VALUE, Point.bRaise2()),
         visible() {
             return Point.U(31).bought;
+        },
+        args: {
+            mult: () => Point.bnMult(),
         },
     },
     {
@@ -351,23 +384,20 @@ const pointBuyableSpecs: PointBuyableSpec[] = [
         descriptionId: 'pB6.description',
         effectDescriptionId: 'effect.simple-mul',
         effectFromCount(count: OmegaNum): OmegaNum {
-            return new OmegaNum(2).pow(count);
+            return Point.bnMult().pow(count);
         },
-        priceScaling: new Exp2Scaling('1e120', '1e10', Number.MAX_VALUE, 10),
+        priceScaling: () => new Exp2Scaling('1e120', '1e10', Number.MAX_VALUE, Point.bRaise2()),
         visible() {
             return Point.U(32).bought;
+        },
+        args: {
+            mult: () => Point.bnMult(),
         },
     },
 ];
 
-const pointUpgrades: Record<number, PointUpgrade> = [];
-for (let i = 0; i < pointUpgradeSpecs.length; i++) {
-    pointUpgrades[pointUpgradeSpecs[i].id] = new PointUpgrade(pointUpgradeSpecs[i], i);
-}
-const pointBuyables: Record<number, PointBuyable> = [];
-for (let i = 0; i < pointBuyableSpecs.length; i++) {
-    pointBuyables[pointBuyableSpecs[i].id] = new PointBuyable(pointBuyableSpecs[i], i);
-}
+const pointUpgrades: Record<number, PointUpgrade> = idMapping(pointUpgradeSpecs, PointUpgrade);
+const pointBuyables: Record<number, PointBuyable> = idMapping(pointBuyableSpecs, PointBuyable);
 
 const Point = {
     get points(): OmegaNum {
@@ -426,7 +456,7 @@ const Point = {
                     this.associatedBuyable() ?? TrivialEffect,
                     Point.B(0),
 
-                    A.U(12), A.U(13),
+                    A.U(12), A.U(13), A.U(23),
                 ));
                 return result;
             },
@@ -443,6 +473,30 @@ const Point = {
         return pointBuyables[id] ?? error('id not exist');
     },
 
+    b0Mult(): OmegaNum {
+        if (A.C(4).isRunning()) return new OmegaNum(1.05);
+
+        let mult = new OmegaNum(1.1);
+        mult = mult.mul(Effects.prod(
+            A.B(2),
+        ));
+        return mult;
+    },
+
+    bnMult(): OmegaNum {
+        if (A.C(5).isRunning()) return new OmegaNum(1.6);
+
+        if (A.C(5).fullyCompleted) return new OmegaNum(2.2);
+        return new OmegaNum(2);
+    },
+
+    bRaise2(): OmegaNum {
+        let result = new OmegaNum(10);
+        if (A.U(24).bought) result = result.mul(0.5);
+        if (A.U(25).bought) result = result.mul(0.4);
+        return result;
+    },
+
     pointPerSecond(): OmegaNum {
         if (!Point.U(11).bought) return new OmegaNum(0);
         let result = Effects.sum(Point.U(11));
@@ -452,7 +506,7 @@ const Point = {
             Point.B(1), Point.B(0),
             Point.booster(1),
 
-            A.U(11), A.U(12), A.U(13),
+            A.U(11), A.U(12), A.U(13), A.U(23),
             Point.U(31), Point.U(32),
         ));
         return result;
@@ -464,7 +518,7 @@ const Point = {
         action() {
             if (!player.automation.point.hotkeyBuyable.unlocked) return;
             for (let b of Point.buyables) {
-                b.buy();
+                b.buyMax();
             }
         },
     } satisfies HotkeyEvent,
@@ -483,6 +537,12 @@ const Point = {
             Point.booster(i).amount = Point.booster(i).amount.add(
                 Point.booster(i).amountPerSecond().mul(duration));
         }
+
+        alertOnce(
+            'point-buyable-scaling',
+            () => Point.points.gte(Number.MAX_VALUE),
+            text('hint.point-buyable-scaling'),
+        );
 
         Point.updateRecords();
     },

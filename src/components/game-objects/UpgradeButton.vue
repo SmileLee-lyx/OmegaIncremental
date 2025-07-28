@@ -9,9 +9,6 @@ import { ref, type Ref } from "vue";
 
 const props = defineProps<{
     upgrade: Upgrade;
-    extra_classes?: string | string[];
-    width?: string | number;
-    height?: string | number;
 }>();
 
 let mouseHover: Ref<boolean> = ref(false);
@@ -22,22 +19,14 @@ function state(): string {
     if (props.upgrade.buyable()) return 'buyable';
     return 'not-buyable';
 }
-
-function style(): any {
-    return {
-        width: props.width,
-        height: props.height,
-    };
-}
 </script>
 
 <template>
     <span class="tooltip-container">
         <button
             v-show="toBoolean(upgrade.visible, true)"
-            :class="[state(), extra_classes]"
+            :class="[state(), upgrade.extraClasses]"
             :disabled="state() !== 'buyable'"
-            :style="style()"
             class="upgrade-button"
             v-bind="$attrs"
             @click="upgrade.buy()"
@@ -68,6 +57,11 @@ function style(): any {
                 </template>
             </span>
         </button>
+        <span v-if="upgrade.hiddenTooltipId !== undefined"
+              v-show="mouseHover && isShiftPressed"
+              class="tooltip-top">
+            <TextFormatter :text="text(upgrade.hiddenTooltipId)"/>
+        </span>
     </span>
 </template>
 

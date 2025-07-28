@@ -1,20 +1,24 @@
 <script lang="ts" setup>
 import BuyablePanel from "@/components/game-objects/BuyablePanel.vue";
+import CollapsableContainer from "@/components/game-objects/CollapsableContainer.vue";
 import HotkeySetter from "@/components/game-objects/HotkeySetter.vue";
 import UpgradeButton from "@/components/game-objects/UpgradeButton.vue";
 import TextFormatter from "@/components/util-objects/TextFormatter.vue";
 import Point from "@/core/game-items/point.js";
 import { player } from "@/core/global-objects.js";
 import { text } from "@/text/text.js";
+import { toBoolean } from "@/util/util.js";
 </script>
 
 <template>
     <div class="main-text">
-        <div class="fixed-width-panel" style="width: 800px">
+        <CollapsableContainer
+            v-model="player.game.collapsedPanels['Point.upgrade']"
+            :width="800">
             <template v-for="i in Point.upgrades.length" :key="i">
                 <UpgradeButton :upgrade="Point.upgrades[i - 1]"/>
             </template>
-        </div>
+        </CollapsableContainer>
         <div class="horizontal-flex-panel">
             <template v-for="i in 5" :key="i">
                 <span v-if="Point.booster(i).unlocked()"
@@ -24,11 +28,14 @@ import { text } from "@/text/text.js";
                 </span>
             </template>
         </div>
-        <div class="fixed-width-panel" style="width: 800px">
+        <CollapsableContainer
+            v-if="Point.buyables.some((b) => toBoolean(b.visible, true))"
+            v-model="player.game.collapsedPanels['Point.buyable']"
+            :width="800">
             <template v-for="i in Point.buyables.length" :key="i">
                 <BuyablePanel :buyable="Point.buyables[i - 1]"/>
             </template>
-        </div>
+        </CollapsableContainer>
         <br>
         <HotkeySetter :config="Point.buyableHotkey"
                       :data="player.automation.point.hotkeyBuyable"/>

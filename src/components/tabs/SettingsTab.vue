@@ -4,6 +4,7 @@ import { GlobalMessages } from "@/core/global-messages.js";
 import {
     autoSave,
     deleteSlot,
+    fullReset,
     loadFromString,
     readSaveFromSlot,
     saveSlots,
@@ -13,6 +14,26 @@ import {
 import { text } from "@/text/text.js";
 import { resolveFormattedText } from "@/util/format.js";
 import { type Ref, ref } from "vue";
+
+const RESET_STR = 'Lorem ipsum dolor sit amet';
+
+function reset() {
+    GlobalMessages.addMessage({
+        type: 'input_box',
+        messageText: resolveFormattedText(text('settings.full-reset.confirm'),
+            { str: RESET_STR }),
+        done(inputText) {
+            if (inputText === RESET_STR) {
+                fullReset();
+            } else {
+                GlobalMessages.addHeaderMessage(
+                    resolveFormattedText(text('settings.full-reset.wrong-confirm')),
+                );
+                return true;
+            }
+        },
+    });
+}
 
 const EXPORT_PREFIX = 'OmegaIncrementalSaveStart';
 const EXPORT_POSTFIX = 'OmegaIncrementalSaveEnd';
@@ -162,6 +183,9 @@ function newSave() {
 <template>
     <div class="main-text">
         <div class="fixed-width-panel" style="width: 650px">
+            <button class="upgrade-button settings" @click="reset()">
+                <TextFormatter :text="text('settings.full-reset')"/>
+            </button>
             <button class="upgrade-button settings" @click="autoSave()">
                 <TextFormatter :text="text('settings.manual-autosave')"/>
             </button>

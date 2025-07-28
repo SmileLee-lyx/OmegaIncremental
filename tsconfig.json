@@ -33,6 +33,6 @@
     "src/**/*",
     "vite.config.ts",
     "omega_num.js.d.ts",
-    "scss.d.ts"
+    "files.d.ts"
   ]
 }

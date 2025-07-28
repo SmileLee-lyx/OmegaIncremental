@@ -1,6 +1,6 @@
 import { globalNow } from "@/components/misc/component-timer.js";
-import { initGame } from "@/core/game-loop.js";
-import { lastAutoSave, type Player, player, playerInitial, VERSION } from "@/core/global-objects.js";
+import { lastAutoSave, type Player, player, playerInitial } from "@/core/global-objects.js";
+import { loadFromObject } from "@/core/save-load/migration.js";
 import { deserialize, serialize } from "@/core/save-load/serialization.js";
 import { error } from "@/util/util.js";
 import _ from "lodash";
@@ -23,14 +23,8 @@ export function saveToString(base64: boolean = false): string {
 }
 
 export function loadFromString(save: string, base64: boolean = false) {
-    fullReset();
-    let newPlayer: any = deserialize((base64 ? decompressFromBase64 : decompress)(save));
-    let version: number = newPlayer?.META?.saveVersion;
-    if (version === undefined) error('not save');
-    if (version > VERSION) error('unknown version');
-    _.merge(player, newPlayer);
-
-    initGame();
+    let data: any = deserialize((base64 ? decompressFromBase64 : decompress)(save));
+    loadFromObject(data);
 }
 
 export const SLOT_LIST_NATIVE_NAME = 'slots';

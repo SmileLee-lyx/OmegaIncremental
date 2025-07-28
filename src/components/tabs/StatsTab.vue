@@ -65,6 +65,24 @@ const config: StatsConfig = {
                 return player.A.unlocked;
             },
         },
+        {
+            key: { level: 'A', target: 'pointsOnReset' },
+            description: text('stats.A.pointsOnReset'),
+            visible() {
+                return player.A.unlocked;
+            },
+        },
+        {
+            key: { level: 'A', target: 'resetDuration' },
+            description: text('stats.A.resetDuration'),
+            visible() {
+                return player.A.unlocked;
+            },
+            value(level) {
+                let time = getEntry(level, this)!!;
+                return formatTime(time);
+            },
+        },
     ],
 };
 

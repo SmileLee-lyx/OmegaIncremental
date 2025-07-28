@@ -9,9 +9,6 @@ import { ref, type Ref } from "vue";
 
 const props = defineProps<{
     reset: Reset;
-    extra_classes?: string | string[];
-    width?: string | number;
-    height?: string | number;
 }>();
 
 let mouseHover: Ref<boolean> = ref(false);
@@ -21,22 +18,14 @@ function state(): string {
     if (props.reset.buyable()) return 'buyable';
     return 'not-buyable';
 }
-
-function style(): any {
-    return {
-        width: props.width,
-        height: props.height,
-    };
-}
 </script>
 
 <template>
     <span class="tooltip-container">
         <button
             v-show="toBoolean(reset.visible, true)"
-            :class="[state(), extra_classes]"
+            :class="[state(), reset.extraClasses]"
             :disabled="state() !== 'buyable'"
-            :style="style()"
             class="upgrade-button"
             style="height: 80px"
             v-bind="$attrs"
