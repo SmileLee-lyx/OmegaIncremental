@@ -16,11 +16,13 @@ const hints: TextId[] = [
 <template>
     <div class="main-text">
         <TextFormatter :text="text('hint-tab.instruction')"/>
+        <br>
         <div class="hint-item">
             <TextFormatter :text="text('hint.info')"/>
         </div>
         <template v-for="h of hints">
             <template v-if="player.game.shownAlerts.includes(h)">
+                <br>
                 <div class="hint-item">
                     <TextFormatter :text="text(h)"/>
                 </div>
