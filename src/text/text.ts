@@ -31,7 +31,7 @@ export function formatTime(time: OmegaNum | number): FormattedText {
     }
     if (time.lte(86400 * 365.2425)) {
         let timeNum = time.toNumber();
-        let s = Math.floor(timeNum) % 60;
+        let s = new OmegaNum(timeNum % 60);
         let min = Math.floor(timeNum / 60) % 60;
         let h = Math.floor(timeNum / 3600) % 24;
         let d = Math.floor(timeNum / 86400);
