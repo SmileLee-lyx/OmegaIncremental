@@ -1,4 +1,3 @@
-import { globalNow } from "@/core/misc/component-timer.js";
 import { isValidHotkey, pressedKeys } from "@/core/misc/global-keyboard-press.js";
 import { runOnFrame } from "@/core/misc/run-on-frame.js";
 import type { HotkeyEvent } from "@/core/Types.js";
@@ -38,8 +37,8 @@ export function registerHotkey(key: string, event: HotkeyEvent): void {
 }
 
 export function clearHotkeys() {
-    for (let key in registeredHotkeyEvents) { 
-        delete registeredHotkeyEvents[key]; 
+    for (let key in registeredHotkeyEvents) {
+        delete registeredHotkeyEvents[key];
     }
 }
 
@@ -59,10 +58,10 @@ export function initHotkey() {
 
     onMounted(() => {
         window.addEventListener('keydown', actionOnKeyDown);
-    })
+    });
     onUnmounted(() => {
         window.removeEventListener('keydown', actionOnKeyDown);
-    })
+    });
 
     runOnFrame(() => {
         for (let key in pressedKeys) {

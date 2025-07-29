@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 
-import { isShift } from "@/core/misc/global-keyboard-press.js";
 import TextFormatter from "@/components/util-objects/TextFormatter.vue";
+import { isShift } from "@/core/misc/global-keyboard-press.js";
 import type { Upgrade } from "@/core/Types.js";
 import { text } from "@/text/text.js";
 import { toBoolean } from "@/util/util.js";

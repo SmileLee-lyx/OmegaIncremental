@@ -1,6 +1,7 @@
 import A from "@/core/game-items/A.js";
 import Ach from "@/core/game-items/achievement.js";
 import Point from "@/core/game-items/point.js";
+import { alertOnceText } from "@/core/global-messages.js";
 import { lastAutoSave, type PartialRecordsData, player, type RecordsData } from "@/core/global-objects.js";
 import { clearHotkeys } from "@/core/misc/hotkey.js";
 import { autoSave } from "@/core/save-load/save-load.js";
@@ -50,6 +51,8 @@ export function initGame() {
 
 export function gameLoop(duration: number) {
     player.META.timeStamp = Date.now();
+
+    alertOnceText('hint.mobile', () => Point.points.gte(2));
 
     updateGameTime(duration);
     Point.gameLoop(duration);

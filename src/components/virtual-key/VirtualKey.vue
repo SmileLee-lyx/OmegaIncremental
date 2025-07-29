@@ -35,8 +35,8 @@ function end() {
 
 <template>
     <span class="virtual-key"
-            @mousedown="(_) => start()" @mouseup="(_) => end()"
-            @touchend="(_) => end()" @touchstart="(_) => start()">
+          @mousedown="(_) => start()" @mouseup="(_) => end()"
+          @touchend="(_) => end()" @touchstart="(_) => start()">
         {{ keyName.toUpperCase() }}
     </span>
 </template>
@@ -50,8 +50,8 @@ function end() {
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    width: 80px;
-    height: 80px;
+    width: 160px;
+    height: 160px;
     margin: 2px;
     border-radius: 50%;
     border: #000 2px solid;

@@ -198,11 +198,11 @@ function setVirtualKey() {
         type: 'input_box',
         messageText: resolveFormattedText(text('settings.virtual.input')),
         done(keyStr) {
-            let keys = [...keyStr].filter(k => isValidHotkey(k))
+            let keys = [...keyStr].filter(k => isValidHotkey(k));
             if (keys.length > 3) keys.splice(3);
             player.settings.virtualKeys = keys;
-        }
-    })
+        },
+    });
 }
 </script>
 

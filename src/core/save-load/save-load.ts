@@ -1,4 +1,3 @@
-import { globalNow } from "@/core/misc/component-timer.js";
 import { lastAutoSave, type Player, player, playerInitial } from "@/core/global-objects.js";
 import { loadFromObject } from "@/core/save-load/migration.js";
 import { deserialize, serialize } from "@/core/save-load/serialization.js";

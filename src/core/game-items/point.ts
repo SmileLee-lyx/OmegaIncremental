@@ -1,11 +1,11 @@
 import { Effects, TrivialEffect } from "@/core/Effects.js";
 import A from "@/core/game-items/A.js";
-import { alertOnce } from "@/core/global-messages.js";
+import { alertOnceText } from "@/core/global-messages.js";
 import { type PartialRecordsData, player, type RecordsData } from "@/core/global-objects.js";
 import { Exp2Scaling, type Scaling } from "@/core/math/price.js";
 import { registerHotkey } from "@/core/misc/hotkey.js";
 import { AbstractBuyable, AbstractUpgrade, type HotkeyEvent } from "@/core/Types.js";
-import { text, type TextId } from "@/text/text.js";
+import { type TextId } from "@/text/text.js";
 import { getBit, setBit } from "@/util/bit-array.js";
 import { type FormattedText } from "@/util/format.js";
 import { error, idMapping, toBoolean } from "@/util/util.js";
@@ -161,10 +161,9 @@ const pointUpgradeSpecs: PointUpgradeSpec[] = [
         },
 
         buyEffect() {
-            alertOnce(
-                'hold-shift',
+            alertOnceText(
+                'hint.hold-shift',
                 true,
-                text('hint.hold-shift'),
             );
         },
     },
@@ -538,10 +537,9 @@ const Point = {
                 Point.booster(i).amountPerSecond().mul(duration));
         }
 
-        alertOnce(
-            'point-buyable-scaling',
+        alertOnceText(
+            'hint.point-buyable-scaling',
             () => Point.points.gte(Number.MAX_VALUE),
-            text('hint.point-buyable-scaling'),
         );
 
         Point.updateRecords();

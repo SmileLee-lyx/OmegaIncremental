@@ -4,7 +4,7 @@ import ChallengePanel from "@/components/game-objects/ChallengePanel.vue";
 import CollapsableContainer from "@/components/game-objects/CollapsableContainer.vue";
 import TextFormatter from "@/components/util-objects/TextFormatter.vue";
 import A from "@/core/game-items/A.js";
-import { alertOnce } from "@/core/global-messages.js";
+import { alertOnceText } from "@/core/global-messages.js";
 import { player } from "@/core/global-objects.js";
 import { text } from "@/text/text.js";
 import { type PFormattedText, resolveFormattedText } from "@/util/format.js";
@@ -19,9 +19,7 @@ function runningChallenge(): PFormattedText {
 }
 
 onMounted(() => {
-    alertOnce('hint.challenge-qol-effect', true,
-        text('hint.challenge-qol-effect'),
-    );
+    alertOnceText('hint.challenge-qol-effect', true);
 });
 </script>
 

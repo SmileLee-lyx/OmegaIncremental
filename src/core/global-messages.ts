@@ -1,4 +1,5 @@
 import { player } from "@/core/global-objects.js";
+import { text, type TextId } from "@/text/text.js";
 import { type PFormattedText, resolveFormattedText } from "@/util/format.js";
 import { MessageManager } from "@/util/message-manager.js";
 import { toBoolean } from "@/util/util.js";
@@ -19,4 +20,11 @@ export function alertOnce(
         type: 'alert',
         messageText: resolveFormattedText(message),
     });
+}
+
+export function alertOnceText(
+    alertId: TextId,
+    condition: boolean | (() => boolean),
+) {
+    alertOnce(alertId, condition, text(alertId));
 }

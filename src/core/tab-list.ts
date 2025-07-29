@@ -1,6 +1,7 @@
 import AChallengesTab from "@/components/tabs/AChallengesTab.vue";
 import AchievementsTab from "@/components/tabs/AchievementsTab.vue";
 import ATab from "@/components/tabs/ATab.vue";
+import HintTab from "@/components/tabs/HintTab.vue";
 import PointTab from "@/components/tabs/PointTab.vue";
 import SettingsTab from "@/components/tabs/SettingsTab.vue";
 import StatsRecordsTab from "@/components/tabs/StatsTab.vue";
@@ -16,6 +17,7 @@ export const tabs: Record<string, Component> = {
     'StatsRecords': StatsRecordsTab,
     'Achievements': AchievementsTab,
     'Settings': SettingsTab,
+    'Hint': HintTab,
 };
 
 export const sideBarConfig: SideBarConfig = {
@@ -77,6 +79,16 @@ export const sideBarConfig: SideBarConfig = {
                 {
                     id: 'Settings',
                     description: 'tab.Settings',
+                },
+            ],
+        },
+        {
+            id: 'Hint',
+            description: 'tab-group.Hint',
+            items: [
+                {
+                    id: 'Hint',
+                    description: 'tab.Hint',
                 },
             ],
         },

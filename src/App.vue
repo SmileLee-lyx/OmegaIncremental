@@ -1,16 +1,15 @@
 <script lang="ts" setup>
 import MessageManager from "@/components/message/MessageManager.vue";
-import VirtualKeyList from "@/components/virtual-key/VirtualKeyList.vue";
-import { globalNow, initTimer } from "@/core/misc/component-timer.ts";
-import { initKeyboardPress } from "@/core/misc/global-keyboard-press.ts";
-import { runOnFrame } from "@/core/misc/run-on-frame.ts";
 import SideBar from "@/components/sidebar/SideBar.vue";
 import Header from "@/components/tabs/Header.vue";
 import TextFormatter from "@/components/util-objects/TextFormatter.vue";
+import VirtualKeyList from "@/components/virtual-key/VirtualKeyList.vue";
 import { gameLoop, initGame } from "@/core/game-loop.js";
 import { GlobalMessages } from "@/core/global-messages.js";
 import { lastAutoSave, player } from "@/core/global-objects.js";
 import { initGlobal } from "@/core/init.js";
+import { globalNow } from "@/core/misc/component-timer.ts";
+import { runOnFrame } from "@/core/misc/run-on-frame.ts";
 import { sideBarConfig, tabs } from "@/core/tab-list.js";
 import { formatTime, text } from "@/text/text.js";
 

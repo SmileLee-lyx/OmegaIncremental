@@ -1,10 +1,10 @@
-import { registerHotkey } from "@/core/misc/hotkey.js";
 import { Effects } from "@/core/Effects.js";
 import Ach from "@/core/game-items/achievement.js";
 import Point from "@/core/game-items/point.js";
-import { alertOnce, GlobalMessages } from "@/core/global-messages.js";
+import { alertOnceText } from "@/core/global-messages.js";
 import { type PartialRecordsData, player, type RecordsData } from "@/core/global-objects.js";
 import { Exp2Scaling, ExpScaling, type Scaling } from "@/core/math/price.js";
+import { registerHotkey } from "@/core/misc/hotkey.js";
 import {
     AbstractBuyable,
     AbstractChallengeSingle,
@@ -13,9 +13,9 @@ import {
     type Reset,
     type WithEffect,
 } from "@/core/Types.js";
-import { text, type TextId } from "@/text/text.js";
+import { type TextId } from "@/text/text.js";
 import { getBit, setBit } from "@/util/bit-array.js";
-import { type FormattedText, resolveFormattedText } from "@/util/format.js";
+import { type FormattedText } from "@/util/format.js";
 import { error, idMapping, toBoolean } from "@/util/util.js";
 import _ from "lodash";
 import OmegaNum, { type OmegaNumSource } from "omega_num.js";
@@ -266,14 +266,6 @@ const upgradeSpecs: AUpgradeSpec[] = [
         },
         buyEffect() {
             player.automation.point.hotkeyBuyable.unlocked = true;
-
-            if (!player.game.shownAlerts.includes('mouse-trigger-hotkey')) {
-                GlobalMessages.addMessage({
-                    'type': 'alert',
-                    messageText: resolveFormattedText(text('hint.mouse-trigger-hotkey')),
-                });
-                player.game.shownAlerts.push('mouse-trigger-hotkey');
-            }
         },
     },
     {
@@ -672,10 +664,9 @@ const A = {
             }
         }
 
-        alertOnce(
-            'reset-A-twice',
+        alertOnceText(
+            'hint.reset-A-twice',
             () => A.U(11).bought && Point.points.gte('1e80'),
-            text('hint.reset-A-twice'),
         );
     },
 };

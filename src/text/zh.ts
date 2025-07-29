@@ -71,7 +71,6 @@ export const text_zh_impl = {
     'hotkey.point-buyable': ['购买所有 pB (', pointText('点数'), '可重复购买升级)'],
 
     'hint.hold-shift': '部分按钮可以通过长按 Shift 或 Ctrl 以查看未显示的额外信息.',
-    'hint.mouse-trigger-hotkey': '鼠标单击或长按快捷键右侧的按钮, 等效于单击或长按快捷键.',
 
     'settings.confirm': '确认',
     'settings.cancel': '取消',
@@ -263,6 +262,11 @@ export const text_zh_impl = {
     'settings.virtual.show': ['虚拟快捷键: ', param('show')],
     'settings.virtual': '设置虚拟快捷键',
     'settings.virtual.input': '请输入至多三个数字或字母, 以设置虚拟快捷键.',
+
+    'tab-group.Hint': '提示信息',
+    'tab.Hint': '提示',
+
+    'hint-tab.instruction': '此处收录所有出现过的提示信息.',
 } satisfies Record<string, PFormattedText>;
 
 export const text_zh: Record<TextId, PFormattedText> = text_zh_impl;

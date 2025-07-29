@@ -27,7 +27,7 @@ const showList = computed(() => props.show ?? false);
     display: block;
     position: fixed;
     right: 10px;
-    bottom: 10px;
+    bottom: 100px;
     z-index: 50;
 }
 </style>
