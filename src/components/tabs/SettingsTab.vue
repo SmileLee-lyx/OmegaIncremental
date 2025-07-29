@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import TextFormatter from "@/components/util-objects/TextFormatter.vue";
 import { GlobalMessages } from "@/core/global-messages.js";
+import { player } from "@/core/global-objects.js";
+import { isValidHotkey } from "@/core/misc/global-keyboard-press.js";
 import {
     autoSave,
     deleteSlot,
@@ -12,7 +14,7 @@ import {
     writeSaveToSlot,
 } from "@/core/save-load/save-load.js";
 import { text } from "@/text/text.js";
-import { resolveFormattedText } from "@/util/format.js";
+import { type FormattedText, resolveFormattedText } from "@/util/format.js";
 import { type Ref, ref } from "vue";
 
 const RESET_STR = 'Lorem ipsum dolor sit amet';
@@ -178,6 +180,30 @@ function newSave() {
     });
 }
 
+function toggleVirtualKey() {
+    player.settings.showVirtualKey = !player.settings.showVirtualKey;
+}
+
+function virtualKeyButtonContent(): FormattedText {
+    return resolveFormattedText(text('settings.virtual.show'),
+        {
+            show: player.settings.showVirtualKey ?
+                text('settings.show.on') : text('settings.show.off'),
+        },
+    );
+}
+
+function setVirtualKey() {
+    GlobalMessages.addMessage({
+        type: 'input_box',
+        messageText: resolveFormattedText(text('settings.virtual.input')),
+        done(keyStr) {
+            let keys = [...keyStr].filter(k => isValidHotkey(k))
+            if (keys.length > 3) keys.splice(3);
+            player.settings.virtualKeys = keys;
+        }
+    })
+}
 </script>
 
 <template>
@@ -197,6 +223,12 @@ function newSave() {
             </button>
             <button class="upgrade-button settings" @click="showSaveLoad = true">
                 <TextFormatter :text="text('settings.save-load')"/>
+            </button>
+            <button class="upgrade-button settings" @click="toggleVirtualKey()">
+                <TextFormatter :text="virtualKeyButtonContent()"/>
+            </button>
+            <button class="upgrade-button settings" @click="setVirtualKey()">
+                <TextFormatter :text="text('settings.virtual')"/>
             </button>
         </div>
     </div>

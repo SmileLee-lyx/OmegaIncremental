@@ -1,4 +1,7 @@
 import { player } from "@/core/global-objects.js";
+import { initTimer } from "@/core/misc/component-timer.js";
+import { initKeyboardPress } from "@/core/misc/global-keyboard-press.js";
+import { initHotkey } from "@/core/misc/hotkey.js";
 import { registerSerializationHandler } from "@/core/save-load/serialization.js";
 import { format } from "@/util/format.js";
 import OmegaNum from "omega_num.js";
@@ -56,8 +59,13 @@ export function initGlobal() {
 
     (window as any).OmegaNum = OmegaNum;
     (window as any).format = format;
-    (window as any).player = player;
 
     registerSerializationHandler(OmegaNumHandler);
     registerSerializationHandler(InfinityNumHandler);
+
+    initTimer();
+    initKeyboardPress();
+    initHotkey();
+
+    (window as any).player = player;
 }

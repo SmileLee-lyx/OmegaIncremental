@@ -1,9 +1,9 @@
-import { registerHotkey } from "@/components/misc/global-keyboard-press.js";
 import { Effects, TrivialEffect } from "@/core/Effects.js";
 import A from "@/core/game-items/A.js";
 import { alertOnce } from "@/core/global-messages.js";
 import { type PartialRecordsData, player, type RecordsData } from "@/core/global-objects.js";
 import { Exp2Scaling, type Scaling } from "@/core/math/price.js";
+import { registerHotkey } from "@/core/misc/hotkey.js";
 import { AbstractBuyable, AbstractUpgrade, type HotkeyEvent } from "@/core/Types.js";
 import { text, type TextId } from "@/text/text.js";
 import { getBit, setBit } from "@/util/bit-array.js";

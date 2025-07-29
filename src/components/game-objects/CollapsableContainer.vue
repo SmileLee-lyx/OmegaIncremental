@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { runOnFrame } from "@/components/misc/run-on-frame.js";
+import { runOnFrame } from "@/core/misc/run-on-frame.js";
 import { onMounted, ref, type Ref } from "vue";
 
 const props = defineProps<{

@@ -1,4 +1,4 @@
-import { registerHotkey } from "@/components/misc/global-keyboard-press.js";
+import { registerHotkey } from "@/core/misc/hotkey.js";
 import { Effects } from "@/core/Effects.js";
 import Ach from "@/core/game-items/achievement.js";
 import Point from "@/core/game-items/point.js";

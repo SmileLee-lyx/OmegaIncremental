@@ -1,14 +1,9 @@
 <script lang="ts" setup>
-import {
-    getRegisteredEvent,
-    getRegisteredKey,
-    isValidHotkey,
-    registerHotkey,
-    removeHotkeyById,
-} from "@/components/misc/global-keyboard-press.js";
 import TextFormatter from "@/components/util-objects/TextFormatter.vue";
 import { GlobalMessages } from "@/core/global-messages.js";
 import type { HotkeyData } from "@/core/global-objects.js";
+import { isValidHotkey } from "@/core/misc/global-keyboard-press.js";
+import { getRegisteredEvent, getRegisteredKey, registerHotkey, removeHotkeyById } from "@/core/misc/hotkey.js";
 import type { HotkeyEvent } from "@/core/Types.js";
 import { text } from "@/text/text.js";
 import { type PFormattedText, resolveFormattedText } from "@/util/format.js";

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 
-import { isShiftPressed } from "@/components/misc/global-keyboard-press.js";
+import { isShift } from "@/core/misc/global-keyboard-press.js";
 import TextFormatter from "@/components/util-objects/TextFormatter.vue";
 import type { Reset } from "@/core/Types.js";
 import { text } from "@/text/text.js";
@@ -34,7 +34,7 @@ function state(): string {
             @mouseleave="mouseHover = false"
         >
             <span class="small">
-                <template v-if="!isShiftPressed || reset.hiddenDescriptionId === undefined">
+                <template v-if="!isShift || reset.hiddenDescriptionId === undefined">
                     <TextFormatter :args="reset.args"
                                    :text="text(reset.dynamicDescriptionId?.call(reset)
                                        ?? reset.descriptionId)"

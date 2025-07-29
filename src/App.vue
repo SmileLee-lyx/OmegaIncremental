@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import MessageManager from "@/components/message/MessageManager.vue";
-import { globalNow, initTimer } from "@/components/misc/component-timer.ts";
-import { initKeyboardPress } from "@/components/misc/global-keyboard-press.ts";
-import { runOnFrame } from "@/components/misc/run-on-frame.ts";
+import VirtualKeyList from "@/components/virtual-key/VirtualKeyList.vue";
+import { globalNow, initTimer } from "@/core/misc/component-timer.ts";
+import { initKeyboardPress } from "@/core/misc/global-keyboard-press.ts";
+import { runOnFrame } from "@/core/misc/run-on-frame.ts";
 import SideBar from "@/components/sidebar/SideBar.vue";
 import Header from "@/components/tabs/Header.vue";
 import TextFormatter from "@/components/util-objects/TextFormatter.vue";
@@ -19,6 +20,7 @@ import { type Component, computed, type ComputedRef } from "vue";
 import "@/assets/main.scss";
 
 initGlobal();
+initGame();
 
 let autoSaveTimeText: ComputedRef<FormattedText> = computed(() => {
     if (lastAutoSave.value === null) {
@@ -30,11 +32,8 @@ let autoSaveTimeText: ComputedRef<FormattedText> = computed(() => {
     });
 });
 
-initTimer();
-initKeyboardPress();
-
-initGame();
 let previousTimeMs = performance.now();
+
 runOnFrame(() => {
     let currentTimeMs = performance.now();
     let duration = (currentTimeMs - previousTimeMs) / 1000;
@@ -42,11 +41,9 @@ runOnFrame(() => {
     gameLoop(duration);
 });
 
-
 let activeTab: ComputedRef<Component | null> = computed(() => {
     return player.game.activeTab !== null ? tabs[player.game.activeTab] : null;
 });
-
 
 </script>
 
@@ -68,6 +65,8 @@ let activeTab: ComputedRef<Component | null> = computed(() => {
     <div class="auto-save-time">
         <TextFormatter :text="autoSaveTimeText"/>
     </div>
+
+    <VirtualKeyList :show="player.settings.showVirtualKey" :keys="player.settings.virtualKeys"/>
 </template>
 
 <style scoped>

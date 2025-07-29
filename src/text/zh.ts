@@ -150,9 +150,6 @@ export const text_zh_impl = {
     ],
     'AU25.description': ['进一步削弱 pB 价格在 1.798e308 后的二阶增幅.'],
     'AU25.hidden-description': ['×0.4'],
-    // 'AU23.description': '解锁 3 级加速器与 pB4, 并将获得的点数 ×100.',
-    // 'AU24.description': '将获得的点数 ×1e6.',
-    // 'AU25.description': '解锁一个新的重置层级.',
 
     'AB1.description': ['将获得的 ', AText('A'), ' ×2.'],
     'AB2.description': ['将', pointText('点数'), '升级 pB1 的倍数 ×1.02.'],
@@ -258,6 +255,14 @@ export const text_zh_impl = {
     'AC5.effect': ['将 pB1-6 的加成倍数提高到至少 2.2.'],
     'AC6.description': '禁用 pU31 与 pU32.',
     'AC6.effect': ['解锁 ', AText('A 能量'), ' (TODO).'],
+
+    'settings.show.on': '显示',
+    'settings.show.off': '隐藏',
+
+    'hint.mobile': '若你在移动端访问, 可在设置页中给底部悬浮按钮设置快捷键.',
+    'settings.virtual.show': ['虚拟快捷键: ', param('show')],
+    'settings.virtual': '设置虚拟快捷键',
+    'settings.virtual.input': '请输入至多三个数字或字母, 以设置虚拟快捷键.',
 } satisfies Record<string, PFormattedText>;
 
 export const text_zh: Record<TextId, PFormattedText> = text_zh_impl;

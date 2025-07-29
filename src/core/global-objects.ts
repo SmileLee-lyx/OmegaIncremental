@@ -78,6 +78,9 @@ export interface Player {
     settings: {
         timeMode?: 'normal' | 'seconds';
         autoSaveMode?: 'every30Seconds' | 'every5Min' | 'never';
+
+        showVirtualKey?: boolean;
+        virtualKeys?: string[];
     };
 
     game: {

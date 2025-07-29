@@ -3,7 +3,7 @@ import AlertBox from "@/components/message/AlertBox.vue";
 import ConfirmBox from "@/components/message/ConfirmBox.vue";
 import HeaderBox from "@/components/message/HeaderBox.vue";
 import InputBox from "@/components/message/InputBox.vue";
-import { runOnFrame } from "@/components/misc/run-on-frame.js";
+import { runOnFrame } from "@/core/misc/run-on-frame.js";
 import type { AlertData, ConfirmData, InputData, MessageManager } from "@/util/message-manager.js";
 import { computed, type ComputedRef } from "vue";
 

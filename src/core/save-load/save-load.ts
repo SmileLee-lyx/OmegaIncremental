@@ -1,4 +1,4 @@
-import { globalNow } from "@/components/misc/component-timer.js";
+import { globalNow } from "@/core/misc/component-timer.js";
 import { lastAutoSave, type Player, player, playerInitial } from "@/core/global-objects.js";
 import { loadFromObject } from "@/core/save-load/migration.js";
 import { deserialize, serialize } from "@/core/save-load/serialization.js";
@@ -102,7 +102,7 @@ export function autoSave() {
     }
     localStorage.setItem(autosaveNativeName(autosaveIndex), saveToString());
     writeAutosaveIndex();
-    lastAutoSave.value = globalNow.value;
+    lastAutoSave.value = performance.now();
 }
 
 export function loadAutoSave() {

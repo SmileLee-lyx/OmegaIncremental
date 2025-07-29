@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 
-import { isShiftPressed } from "@/components/misc/global-keyboard-press.js";
+import { isShift } from "@/core/misc/global-keyboard-press.js";
 import TextFormatter from "@/components/util-objects/TextFormatter.vue";
 import type { Upgrade } from "@/core/Types.js";
 import { text } from "@/text/text.js";
@@ -34,7 +34,7 @@ function state(): string {
             @mouseleave="mouseHover = false"
         >
             <span class="small">
-                <template v-if="!isShiftPressed || upgrade.hiddenDescriptionId === undefined">
+                <template v-if="!isShift || upgrade.hiddenDescriptionId === undefined">
                     <span class="large upgrade-button-title">{{ upgrade.name }}</span>
                     <TextFormatter :args="upgrade.args"
                                    :text="text(upgrade.dynamicDescriptionId?.call(upgrade)
@@ -58,7 +58,7 @@ function state(): string {
             </span>
         </button>
         <span v-if="upgrade.hiddenTooltipId !== undefined"
-              v-show="mouseHover && isShiftPressed"
+              v-show="mouseHover && isShift"
               class="tooltip-top">
             <TextFormatter :text="text(upgrade.hiddenTooltipId)"/>
         </span>

@@ -1,9 +1,8 @@
-import { globalNow } from "@/components/misc/component-timer.js";
-import { clearHotkeys } from "@/components/misc/global-keyboard-press.js";
 import A from "@/core/game-items/A.js";
 import Ach from "@/core/game-items/achievement.js";
 import Point from "@/core/game-items/point.js";
 import { lastAutoSave, type PartialRecordsData, player, type RecordsData } from "@/core/global-objects.js";
+import { clearHotkeys } from "@/core/misc/hotkey.js";
 import { autoSave } from "@/core/save-load/save-load.js";
 import OmegaNum from "omega_num.js";
 
@@ -34,8 +33,8 @@ function checkAutoSave() {
     }
 
     if (lastAutoSave.value === null) {
-        lastAutoSave.value = globalNow.value;
-    } else if (globalNow.value - lastAutoSave.value >= threshold) {
+        lastAutoSave.value = performance.now();
+    } else if (performance.now() - lastAutoSave.value >= threshold) {
         autoSave();
     }
 }
@@ -43,7 +42,7 @@ function checkAutoSave() {
 export function initGame() {
     clearHotkeys();
 
-    lastAutoSave.value = globalNow.value;
+    lastAutoSave.value = performance.now();
 
     Point.init();
     A.init();
