@@ -257,8 +257,18 @@ export const text_zh_impl = {
 
     'settings.show.on': '显示',
     'settings.show.off': '隐藏',
+    'settings.save.confirm': '确定要覆盖存档吗?',
+    'settings.load.confirm': '确定要读取存档吗?',
+
+    'hint.info': ['本游戏由笑姐姐制作, 缝合了 (或将来希望缝合) 包括反物质维度 (Antimatter Dimensions), ',
+                  '质量增量 (Incremental Mass Rewritten) 在内的多款增量游戏的部分机制和少量 UI 设计.', br(),
+                  '最近更新: 20250730'],
 
     'hint.mobile': '若你在移动端访问, 可在设置页中给底部悬浮按钮设置快捷键.',
+    'hint.manual-save': ['尽管有自动存档, 还是建议每次退出时手动存档. ',
+                         '以作者的低技术力, 万一以后某一次更新把读档功能 (包括读取自动存档) 搞炸了, ',
+                         '自动存档就无法恢复了; 而手动存档在 bug 修好后就能正确读取了.'],
+
     'settings.virtual.show': ['虚拟快捷键: ', param('show')],
     'settings.virtual': '设置虚拟快捷键',
     'settings.virtual.input': '请输入至多三个数字或字母, 以设置虚拟快捷键.',

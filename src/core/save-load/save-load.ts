@@ -54,6 +54,10 @@ export function deleteSlot(slot: string): void {
     writeSaveSlots();
 }
 
+export function slotExists(slot: string): boolean {
+    return localStorage.getItem(slotNativeName(slot)) !== null;
+}
+
 export function writeSaveToSlot(slot: string) {
     localStorage.setItem(slotNativeName(slot), saveToString());
     saveSlots.add(slot);

@@ -11,6 +11,7 @@ import {
     readSaveFromSlot,
     saveSlots,
     saveToString,
+    slotExists,
     writeSaveToSlot,
 } from "@/core/save-load/save-load.js";
 import { text } from "@/text/text.js";
@@ -81,48 +82,74 @@ function confirmImport() {
 let showSaveLoad = ref(false);
 let selectedSave: Ref<string | null> = ref(null);
 
-function save() {
-    if (selectedSave.value === null) {
-        GlobalMessages.addHeaderMessage(
-            resolveFormattedText(text('settings.save-load.should-select-slot')),
-        );
-        return;
-    }
+function saveImpl(slot: string) {
     try {
-        writeSaveToSlot(selectedSave.value);
+        writeSaveToSlot(slot);
     } catch (e) {
         GlobalMessages.addHeaderMessage(
             resolveFormattedText(text('settings.save.failure'),
-                { slot: selectedSave.value }),
+                { slot: slot }),
         );
         return;
     }
     GlobalMessages.addHeaderMessage(
         resolveFormattedText(text('settings.save.success'),
-            { slot: selectedSave.value }),
+            { slot: slot }),
     );
 }
 
-function load() {
-    if (selectedSave.value === null) {
+function save() {
+    const slot: string | null = selectedSave.value;
+    if (slot === null) {
         GlobalMessages.addHeaderMessage(
             resolveFormattedText(text('settings.save-load.should-select-slot')),
         );
         return;
     }
+    if (slotExists(slot)) {
+        GlobalMessages.addMessage({
+            type: 'confirm',
+            messageText: resolveFormattedText(text('settings.save.confirm')),
+            done() {
+                saveImpl(slot);
+            },
+        });
+    } else {
+        saveImpl(slot);
+    }
+}
+
+function loadImpl(slot: string) {
     try {
-        readSaveFromSlot(selectedSave.value);
+        readSaveFromSlot(slot);
     } catch (e) {
         GlobalMessages.addHeaderMessage(
             resolveFormattedText(text('settings.load.failure'),
-                { slot: selectedSave.value }),
+                { slot: slot }),
         );
         return;
     }
     GlobalMessages.addHeaderMessage(
         resolveFormattedText(text('settings.load.success'),
-            { slot: selectedSave.value }),
+            { slot: slot }),
     );
+}
+
+function load() {
+    let slot: string | null = selectedSave.value;
+    if (slot === null) {
+        GlobalMessages.addHeaderMessage(
+            resolveFormattedText(text('settings.save-load.should-select-slot')),
+        );
+        return;
+    }
+    GlobalMessages.addMessage({
+        type: 'confirm',
+        messageText: resolveFormattedText(text('settings.load.confirm')),
+        done() {
+            loadImpl(slot);
+        },
+    });
 }
 
 function deleteSave() {

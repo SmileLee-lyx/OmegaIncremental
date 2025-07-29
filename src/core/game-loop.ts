@@ -53,6 +53,7 @@ export function gameLoop(duration: number) {
     player.META.timeStamp = Date.now();
 
     alertOnceText('hint.mobile', () => Point.points.gte(2));
+    alertOnceText('hint.manual-save', () => Point.points.gte(1e10));
 
     updateGameTime(duration);
     Point.gameLoop(duration);

@@ -5,6 +5,7 @@ import { text, type TextId } from "@/text/text.js";
 
 const hints: TextId[] = [
     'hint.mobile',
+    'hint.manual-save',
     'hint.hold-shift',
     'hint.point-buyable-scaling',
     'hint.reset-A-twice',
@@ -15,6 +16,9 @@ const hints: TextId[] = [
 <template>
     <div class="main-text">
         <TextFormatter :text="text('hint-tab.instruction')"/>
+        <div class="hint-item">
+            <TextFormatter :text="text('hint.info')"/>
+        </div>
         <template v-for="h of hints">
             <template v-if="player.game.shownAlerts.includes(h)">
                 <div class="hint-item">
